@@ -10,6 +10,16 @@
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
  ******************************************************************************/
 
+pluginManagement {
+  plugins {
+    id 'biz.aQute.bnd.builder' version '5.2.0'
+  }
+  repositories {
+  	mavenCentral()
+  	jcenter()
+  }
+}
+
 rootProject.name = 'lsp4j'
 include 'org.eclipse.lsp4j'
 include 'org.eclipse.lsp4j.debug'

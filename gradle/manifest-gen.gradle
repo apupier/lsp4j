@@ -10,7 +10,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
  ******************************************************************************/
 
-apply plugin: 'osgi'
+repositories.jcenter()
+apply plugin: 'biz.aQute.bnd.builder'
 
 def baseVersion = project.version
 if (baseVersion.endsWith('-SNAPSHOT'))
@@ -19,12 +20,16 @@ else if (baseVersion.split('\\.').length == 4)
 	baseVersion = baseVersion.substring(0, baseVersion.lastIndexOf('.'))
 def qualifiedVersion = baseVersion + '.v' + buildTime
 
-jar.manifest {
-	version = qualifiedVersion
+jar {
 	if (project.hasProperty('title'))
-		name = project.title
-	vendor = 'Eclipse LSP4J'
-	instruction 'Bundle-RequiredExecutionEnvironment', 'JavaSE-1.8'
+		bnd ('Bundle-Name' : project.title,			
+			'Bundle-Version' : qualifiedVersion,
+			'Bundle-Vendor' : 'Eclipse LSP4J',
+			'Bundle-RequiredExecutionEnvironment' : 'JavaSE-1.8')
+	else
+		bnd ('Bundle-Version' : qualifiedVersion,
+			'Bundle-Vendor' : 'Eclipse LSP4J',
+			'Bundle-RequiredExecutionEnvironment' : 'JavaSE-1.8')
 }
 
 //------------------------------------------------------
